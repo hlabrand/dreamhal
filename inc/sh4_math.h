@@ -527,9 +527,10 @@ static inline __attribute__((always_inline)) float MATH_Fast_Divide(float numera
 
 // fast sqrt(x)
 // Crazy thing: invert(fsrra(x)) is actually about 3x faster than fsqrt.
+// HL: actually, sqrt(x) = 1/sqrt(x) * x, so we don't even need to invert
 static inline __attribute__((always_inline)) float MATH_Fast_Sqrt(float x)
 {
-  return MATH_Fast_Invert(MATH_fsrra(x));
+  return x*MATH_fsrra(x);
 }
 
 // Standard, accurate, and slow float divide. Use this if MATH_Fast_Divide() gives you issues.
@@ -2185,7 +2186,7 @@ static inline __attribute__((always_inline)) float MATH_Kaiser_Window(float x, f
     x = normalizer * x;
     y = normalizer * y;
     z = normalizer * z;
-    magnitude = MATH_Fast_Invert(normalizer);
+    magnitude = temp*normalizer;
   }
 
 -- end -- */
