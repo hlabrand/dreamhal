@@ -103,6 +103,7 @@ char * int_to_string(int in_number, char* out_string)
 	{
 		need_neg = 1;
 		neg = 1;
+                in_number = -in_number;
 	}
 
 	// 10 digits for the number, plus one char for the potential (-) sign
@@ -120,14 +121,7 @@ char * int_to_string(int in_number, char* out_string)
 		}
 		else
 		{
-			if(neg)
-			{
-				out_string[i] = dec_hex_data[-(in_number % 10)]; // mod of negative number is still negative
-			}
-			else
-			{
-				out_string[i] = dec_hex_data[in_number % 10];
-			}
+			out_string[i] = dec_hex_data[in_number % 10];
 		}
 		in_number /= 10;
 	}
