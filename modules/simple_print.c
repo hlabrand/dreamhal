@@ -95,14 +95,14 @@ char * int_to_string(int in_number, char* out_string)
 {
 	int i;
 	int need_neg = 0;
-  int neg = 0;
+	int neg = 0;
 
-  out_string[11] = '\0'; // Null term
+	out_string[11] = '\0'; // Null term
 
 	if(in_number < 0)
 	{
 		need_neg = 1;
-    neg = 1;
+		neg = 1;
 	}
 
 	// 10 digits for the number, plus one char for the potential (-) sign
@@ -115,24 +115,24 @@ char * int_to_string(int in_number, char* out_string)
 		}
 		else if((!in_number) && (i < 10))
 		{
-      memmove(out_string, &(out_string[i + 1]), 12-i); // realign string with beginning
+			memmove(out_string, &(out_string[i + 1]), 12-i); // realign string with beginning
 			return out_string;
 		}
 		else
 		{
-      if(neg)
-      {
-        out_string[i] = dec_hex_data[-(in_number % 10)]; // mod of negative number is still negative
-      }
-      else
-      {
-        out_string[i] = dec_hex_data[in_number % 10];
-      }
+			if(neg)
+			{
+				out_string[i] = dec_hex_data[-(in_number % 10)]; // mod of negative number is still negative
+			}
+			else
+			{
+				out_string[i] = dec_hex_data[in_number % 10];
+			}
 		}
 		in_number /= 10;
 	}
 
-  return out_string;
+	return out_string;
 }
 
 // WARNING: This is not super accurate. The printed value may be too small by up to 0.002.
