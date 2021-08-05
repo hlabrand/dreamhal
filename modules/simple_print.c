@@ -103,21 +103,24 @@ char * int_to_string(int in_number, char* out_string)
 	{
 		need_neg = 1;
 		neg = 1;
-                in_number = -in_number;
+		in_number = -in_number;
 	}
 
 	// 10 digits for the number, plus one char for the potential (-) sign
 	for(i = 10; i >= 0; i--)
 	{
-		if(need_neg && (!in_number) && (i < 10))
+		if((!in_number) && (i < 10))
 		{
-			out_string[i] = '-';
-			need_neg = 0;
-		}
-		else if((!in_number) && (i < 10))
-		{
-			memmove(out_string, &(out_string[i + 1]), 12-i); // realign string with beginning
-			return out_string;
+			if (need_neg)
+			{
+				out_string[i] = '-';
+				need_neg = 0;
+			}
+			else
+			{
+				memmove(out_string, &(out_string[i + 1]), 12-i); // realign string with beginning
+				return out_string;
+			}
 		}
 		else
 		{
