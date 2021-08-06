@@ -1913,6 +1913,7 @@ static inline __attribute__((always_inline)) float MATH_Slerp(float a, float b, 
   // v = v0 * cos(-t * theta) + ( v0 * ( cos(theta) * sin(-t * theta) ) - sin(-t * theta) * v1 ) / sin(theta)
   // which only requires two calls to fsca.
   // Specifically, sin(a + b) = sin(a)cos(b) + cos(a)sin(b) & sin(-a) = -sin(a)
+  // HL: the fraction in the formula above rewrites as sin(-t*theta) (v0*cos(theta)-v1)/(sin(theta)
 
   // MATH_fsca_* functions return reverse-ordered complex numbers for speed reasons (i.e. normally sine is the imaginary part)
   // This could be made even faster by using MATH_fsca_Int() with 'theta' and 't' as unsigned ints
@@ -1939,7 +1940,7 @@ static inline __attribute__((always_inline)) float MATH_Slerp(float a, float b, 
 
 #endif
 
-  float numer = a * cosine_value_theta * sine_value_minus_t_theta - sine_value_minus_t_theta * b;
+  float numer = sine_value_minus_t_theta*MATH_fmac_Dec(a, cosine_value_theta, b);
   float output_float = a * cosine_value_minus_t_theta + MATH_Fast_Divide(numer, sine_value_theta);
 
   return output_float;
